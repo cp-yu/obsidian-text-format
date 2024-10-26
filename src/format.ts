@@ -653,3 +653,22 @@ export function convertLatex(editor: Editor, selectedText: string): string {
         ;
     return replacedText;
 }
+
+export function modifyLatex(editor: Editor, selectedText: string): string {
+    if (editor) {
+        // 只处理 \(equation\) 和 \[equation\] 的情况
+
+        // 替换行内公式 \(equation\) 为 $equation$
+        let modifiedText = selectedText.replace(/\\\((.*?)\\\)/g, (match, equation) => {
+            return `$${equation}$`;
+        });
+
+        // 替换行间公式 \[equation\] 为 $$equation$$
+        modifiedText = modifiedText.replace(/\\\[(.*?)\\\]/gs, (match, equation) => {
+            return `$$${equation}$$`;
+        });
+
+        return modifiedText;
+    }
+    return selectedText;
+}

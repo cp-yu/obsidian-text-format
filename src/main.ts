@@ -5,7 +5,7 @@ import {
 import { removeWikiLink, removeUrlLink, url2WikiLink, convertWikiLinkToMarkdown } from "./link";
 import { TextFormatSettingTab } from "./settings/settingTab";
 import { FormatSettings, DEFAULT_SETTINGS, CalloutTypeDecider, CustomReplaceBuiltIn } from "./settings/types";
-import { array2markdown, table2bullet, capitalizeWord, capitalizeSentence, removeAllSpaces, zoteroNote, textWrapper, replaceLigature, ankiSelection, sortTodo, requestAPI, headingLevel, slugify, snakify, extraDoubleSpaces, toTitleCase, customReplace, convertLatex, camelCase } from "./format";
+import { array2markdown, table2bullet, capitalizeWord, capitalizeSentence, removeAllSpaces, zoteroNote, textWrapper, replaceLigature, ankiSelection, sortTodo, requestAPI, headingLevel, slugify, snakify, extraDoubleSpaces, toTitleCase, customReplace, convertLatex,modifyLatex, camelCase } from "./format";
 import { CustomReplacementBuiltInCommands, GlobalCommands } from "./commands";
 import { getString } from "./langs/langs";
 import { selectionBehavior, FormatSelectionReturn } from "./types";
@@ -433,6 +433,14 @@ export default class TextFormat extends Plugin {
       },
     });
     this.addCommand({
+      id: "latex-modify",
+      name: { en: "Detect and convert characters to math mode (LaTeX)", zh: "识别并转换字符为数学模式（LaTeX）", "zh-TW": "識別並轉換字符為數學模式（LaTeX）" }[lang],
+      icon: "square-sigma",
+      editorCallback: (editor: Editor, view: MarkdownView) => {
+        this.editorTextFormat(editor, view, "latex-modify");
+      },
+    });
+    this.addCommand({
       id: "mathpix-array2table",
       name: {
         en: "Convert Mathpix's LaTeX array to markdown table", zh: "将 Mathpix 的 LaTeX 数组转换为 Markdown 表格", "zh-TW": "將 Mathpix 的 LaTeX 陣列轉換為 Markdown 表格"
@@ -848,6 +856,9 @@ export default class TextFormat extends Plugin {
           break;
         case "latex-letter":
           replacedText = convertLatex(context.editor, selectedText);
+          break;
+        case "latex-modify":
+          replacedText = modifyLatex(context.editor, selectedText);
           break;
         default:
           Error("Unknown command");
