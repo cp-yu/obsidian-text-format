@@ -434,7 +434,7 @@ export default class TextFormat extends Plugin {
     });
     this.addCommand({
       id: "latex-modify",
-      name: { en: "Detect and convert characters to math mode (LaTeX)", zh: "识别并转换字符为数学模式（LaTeX）", "zh-TW": "識別並轉換字符為數學模式（LaTeX）" }[lang],
+      name: { en: "Convert the inline formula \(\) to $$, and the same is true for block formulas", zh: "将行内公式\(\)转为$$，块公式同理", "zh-TW": "将行内公式\(\)转为$$，块公式同理" }[lang],
       icon: "square-sigma",
       editorCallback: (editor: Editor, view: MarkdownView) => {
         this.editorTextFormat(editor, view, "latex-modify");

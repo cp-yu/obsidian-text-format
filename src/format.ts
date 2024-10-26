@@ -658,18 +658,18 @@ export function modifyLatex(editor: Editor, selectedText: string): string {
     if (editor) {
         // 只处理 \(equation\) 和 \[equation\] 的情况
 
-        // 替换行内公式 \(equation\) 为 $equation$
+        // 替换行内公式 \(equation\) 为 $equation$，去除 equation 的首尾空格
         let modifiedText = selectedText.replace(/\\\((.*?)\\\)/g, (match, equation) => {
-            return `$${equation}$`;
+            return `$${equation.trim()}$`;
         });
 
-        // 替换行间公式 \[equation\] 为 $$equation$$
+        // 替换行间公式 \[equation\] 为 $$equation$$，去除 equation 的首尾空格
         modifiedText = modifiedText.replace(/\\\[(.*?)\\\]/gs, (match, equation) => {
-            return `$$${equation}$$`;
+            return `$$${equation.trim()}$$`;
         });
 
         return modifiedText;
     }
     return selectedText;
-    
 }
+
