@@ -671,4 +671,5 @@ export function modifyLatex(editor: Editor, selectedText: string): string {
         return modifiedText;
     }
     return selectedText;
+    
 }
