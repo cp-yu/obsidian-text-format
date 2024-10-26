@@ -18,3 +18,5 @@ obsidian-text-format alias
 *.json
 !manifest.json
 !manifest-beta.json
+
+*.patch
